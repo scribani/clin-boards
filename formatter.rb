@@ -25,11 +25,34 @@ module Formatter
           "lists": [0, 1]
         }
       ]
-      print_content("CLIn Boards", %w[ID Name Description List(#cards)], collection) do |board| # HARDCODE!!!
+      print_content("CLIn Boards", %w[ID Name Description List(#cards)], collection) do |board|
         [board[:id], board[:name], board[:description], "List(#{board[:lists].size})"] # HARDCODE!!!
+      end
+    end
+
+    def self.print_lists
+      collection = [ # HARDCODE!!!
+        { "id": 1, "name": "Todos", "cards": [
+          {
+            "id": 8, "title": "Do something nice", "members": %w[Ana Andres Luis],
+            "labels": ["project"], "due_date": "2021-06-03", "checklist": []
+          }
+        ] },
+        { "id": 2, "name": "In Progress", "cards": [
+          {
+            "id": 4, "title": "Create List class", "members": ["Deyvi"],
+            "labels": %w[coding challenge], "due_date": "2020-11-19", "checklist": []
+          }
+        ] }
+      ]
+      collection.each do |list|
+        print_content(list[:name], %w[ID Title Members Labels Due Date Checklist], list[:cards]) do |c|
+          [c[:id], c[:title], c[:members].join(", "), c[:labels].join(", "), c[:due_date], c[:checklist]]
+        end
       end
     end
   end
 end
 
 Formatter::Test.print_boards
+Formatter::Test.print_lists
