@@ -10,17 +10,30 @@ class ClinBoards
   def start
     action = ""
     until action == "exit"
-      print "Enter action: "
+      print "Enter action: " # HARDCODE!!!
       action, id = gets.chomp.split # HARDCODE!!!
-      case action
-      when "create" then puts "create_board" # HARDCODE!!!
-      when "show" then puts "show_board(#{id})" # HARDCODE!!!
-      when "update" then puts "update_board(#{id})" # HARDCODE!!!
-      when "delete" then puts "remove_board(#{id})" # HARDCODE!!!
-      when "exit" then goodbye
-      else puts "Invalid option"
-      end
+      action_sym = "#{action}_board".to_sym
+
+      return goodbye if action == "exit"
+
+      methods.include?(action_sym) ? method(action_sym).call(id) : puts("Invalid option")
     end
+  end
+
+  def create_board(_id)
+    puts "create_board" # HARDCODE!!!
+  end
+
+  def show_board(id)
+    puts "show_board(#{id})" # HARDCODE!!!
+  end
+
+  def update_board(id)
+    puts "update_board(#{id})" # HARDCODE!!!
+  end
+
+  def delete_board(id)
+    puts "delete_board(#{id})" # HARDCODE!!!
   end
 
   def goodbye
