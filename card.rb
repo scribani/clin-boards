@@ -19,6 +19,19 @@ class Card
     @due_date = data[:due_date] unless data[:due_date].empty?
   end
 
+  def add_checklist(checklist)
+    @checklist << checklist
+  end
+
+  def toggle_checklist(index)
+    checklist = @checklist[index - 1]
+    checklist[:completed] = !checklist[:completed]
+  end
+
+  def delete_checklist(index)
+    @checklist.delete_at(index - 1)
+  end
+
   def self.next_id
     @id_sequence += 1
   end

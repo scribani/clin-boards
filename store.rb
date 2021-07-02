@@ -35,8 +35,8 @@ class Store
     persist_json
   end
 
-  def add_list(board, list)
-    board.lists << list
+  def add_list(board, data)
+    board.add_list(data)
     persist_json
   end
 
@@ -44,34 +44,32 @@ class Store
     board.lists.find { |list| list.id == id }
   end
 
-  def update_list(board, id, data)
-    found_list = find_list(board, id)
-    found_list.update(data)
+  def update_list(board, list_name, data)
+    found_list = board.lists.select { |list| list.name == list_name }
+    found_list.update_list_name(data)
     persist_json
   end
 
-  def delete_list(board, id)
-    board.lists.delete_if { |list| list.id == id }
+  def delete_list(board, list_name)
+    board.delete_list(list_name)
     persist_json
   end
 
-  def add_card(list, card)
-    list.cards << card
+  def add_card(list, data)
+    list.create_card(data)
     persist_json
   end
 
-  def find_card(list, id)
-    list.cards.find { |card| card.id == id }
-  end
-
-  def update_card(list, id, data)
-    found_card = find_card(list, id)
+  def update_card(id, data)
+    list_found = find_list_given_card_id(id)
+    found_card = find_card(list_found, id)
     found_card.update(data)
     persist_json
   end
 
-  def delete_card(list, id)
-    list.cards.delete_if { |card| card.id == id }
+  def delete_card(id)
+    list_found = find_list_given_card_id(id)
+    list_found.delete_card(id)
     persist_json
   end
 
@@ -79,27 +77,28 @@ class Store
     File.write(@filename, @boards.to_json)
   end
 
-  def find_card(card_id)
-    list_selected = @boards.lists.select do |list|
+  def find_list_given_card_id(card_id)
+    @boards.lists.select do |list|
       list.cards.find { |card| card.id == card_id }
     end
+  end
 
-    list_selected.cards.find { |card| card.id == card_id }
+  def find_card(list, card_id)
+    list.cards.find { |card| card.id == card_id }
   end
 
   def add_checklist(card, checklist)
-    card.checklist << checklist
+    card.add_checklist(checklist)
     persist_json
   end
 
   def toggle_checklist(card, index)
-    checklist = card.checklist[index]
-    checklist[:completed] = !checklist[:completed]
+    card.toggle_checklist(index)
     persist_json
   end
 
   def delete_checklist(card, index)
-    card.checklist.delete_at(index - 1)
+    card.delete_checklist(index)
     persist_json
   end
 end

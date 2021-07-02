@@ -20,30 +20,35 @@ module Formatter
     end
   end
 
-  def print_lists
-    @lists.each do |list|
+  def print_lists(board)
+    board.lists.each do |list|
       print_content(list.name, %w[ID Title Members Labels Due Date Checklist], list.cards) do |card|
-        size = card.checklist.size
-        checked = card.checklist.count { |item| item[:completed] }
-        [card.id, card.title, card.members.join(", "), card.labels.join(", "), card.due_date, "#{checked}/#{size}"]
+        done = completed_over_total(card)
+        [card.id, card.title, card.members.join(", "), card.labels.join(", "), card.due_date, done]
       end
     end
   end
 
-  def print_card_checklist
-    puts "Card: #{@title}"
+  def completed_over_total(card)
+    size = card.checklist.size
+    checked = card.checklist.count { |item| item[:completed] }
+    "#{checked}/#{size}"
+  end
 
-    @checklist.each_with_index do |item, idx|
+  def print_card_checklist(card)
+    puts "Card: #{card.title}"
+
+    card.checklist.each_with_index do |item, index|
       toggle = item[:completed] ? "x" : " "
-      puts "[#{toggle}] #{idx + 1}. #{item[:title]}"
+      puts "[#{toggle}] #{index + 1}. #{item[:title]}"
     end
 
     puts "-------------------------------------"
   end
 
-  def print_lists_names
+  def print_lists_names(board)
     list_arr = []
-    @lists.each do |list|
+    board.lists.each do |list|
       list_arr << list.name
     end
     puts list_arr.join(" | ")
