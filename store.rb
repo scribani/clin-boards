@@ -32,4 +32,10 @@ class Store
     card.checklist << checklist
     persist_json
   end
+
+  def toggle_checklist(card, index)
+    checklist = card.checklist[index]
+    checklist[:completed] = !checklist[:completed]
+    persist_json
+  end
 end
