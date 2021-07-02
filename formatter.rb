@@ -10,22 +10,13 @@ module Formatter
   end
 
   def print_boards
-    collection = [ # HARDCODE!!!
-      {
-        "id": 1,
-        "name": "Extended - CLIn Boards",
-        "description": "Task management for the last extended",
-        "lists": [0, 1, 2, 3]
-      },
-      {
-        "id": 2,
-        "name": "Test - CLIn Boards",
-        "description": "May Rubocop have mercy upon us",
-        "lists": [0, 1]
-      }
-    ]
-    print_content("CLIn Boards", %w[ID Name Description List(#cards)], collection) do |board|
-      [board[:id], board[:name], board[:description], "List(#{board[:lists].size})"] # HARDCODE!!!
+    print_content("CLIn Boards", %w[ID Name Description List(#cards)], @boards) do |board|
+      list_arr = []
+      board.lists.each do |list|
+        list_arr = []
+        list_arr << "#{list.name}(#{list.cards.size})"
+      end
+      [board.id, board.name, board.description, list_arr.join(", ")]
     end
   end
 

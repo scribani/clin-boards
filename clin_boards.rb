@@ -1,18 +1,21 @@
-# require_relative "formatter"
-# require_relative "requester"
+require_relative "formatter"
+require_relative "prompter"
 
 class ClinBoards
+  include Formatter
+  include Prompter
+
   def initialize(_store = "store.json")
-    @store = "Store.new(store)" # HARDCODE!!!
-    @board = "@store.boards" # HARDCODE!!!
+    @store = Store.new(store)
+    @boards = @store.boards
   end
 
   def start
     welcome
     action = ""
     until action == "exit"
-      print "Enter action: " # HARDCODE!!!
-      action, id = gets.chomp.split # HARDCODE!!!
+      print_boards
+      action, id = main_menu
       action_sym = "#{action}_board".to_sym
 
       return goodbye if action == "exit"
