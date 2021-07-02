@@ -30,7 +30,7 @@ module Prompter
   end
 
   def checklist_form
-    print "Card: "
+    print "Title: "
     title = gets.chomp
     { title: title, completed: false }
   end
