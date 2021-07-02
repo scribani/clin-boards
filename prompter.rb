@@ -1,8 +1,4 @@
-require_relative "formatter"
-
 module Prompter
-  include Formatter
-
   def main_menu
     puts "Board options: create | show ID | update ID | delete ID\nexit"
     print "> "

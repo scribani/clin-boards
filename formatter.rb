@@ -21,23 +21,11 @@ module Formatter
   end
 
   def print_lists
-    collection = [ # HARDCODE!!!
-      { "id": 1, "name": "Todos", "cards": [
-        {
-          "id": 8, "title": "Do something nice", "members": %w[Ana Andres Luis],
-          "labels": ["project"], "due_date": "2021-06-03", "checklist": []
-        }
-      ] },
-      { "id": 2, "name": "In Progress", "cards": [
-        {
-          "id": 4, "title": "Create List class", "members": ["Deyvi"],
-          "labels": %w[coding challenge], "due_date": "2020-11-19", "checklist": []
-        }
-      ] }
-    ]
-    collection.each do |list|
-      print_content(list[:name], %w[ID Title Members Labels Due Date Checklist], list[:cards]) do |c|
-        [c[:id], c[:title], c[:members].join(", "), c[:labels].join(", "), c[:due_date], c[:checklist]]
+    @lists.each do |list|
+      print_content(list.name, %w[ID Title Members Labels Due Date Checklist], list.cards) do |card|
+        size = card.checklist.size
+        checked = card.checklist.count { |item| item[:completed] }
+        [card.id, card.title, card.members.join(", "), card.labels.join(", "), card.due_date, "#{checked}/#{size}"]
       end
     end
   end

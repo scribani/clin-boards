@@ -76,6 +76,6 @@ class Store
   end
 
   def persist_json
-    File.write(@filename, @playlists.to_json)
+    File.write(@filename, @boards.to_json)
   end
 end
