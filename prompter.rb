@@ -17,8 +17,8 @@ module Prompter
   def checklist_menu
     puts "Checklist options: add | toggle INDEX | delete INDEX\nback"
     print "> "
-    action, id = gets.chomp.split
-    [action, id.to_i]
+    action, index = gets.chomp.split
+    [action, index.to_i]
   end
 
   def board_form
@@ -50,7 +50,7 @@ module Prompter
     print "Title: "
     title = gets.chomp
     print "Members: "
-    members = gets.chomp.split(",")
+    members = gets.chomp.split(", ")
     print "Labels: "
     labels = gets.chomp
     print "Due Date: "
