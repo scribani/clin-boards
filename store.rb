@@ -35,8 +35,8 @@ class Store
     persist_json
   end
 
-  def add_list(board, list)
-    board.lists << list
+  def add_list(board, data)
+    board.add_list(data)
     persist_json
   end
 
@@ -44,19 +44,19 @@ class Store
     board.lists.find { |list| list.id == id }
   end
 
-  def update_list(board, id, data)
-    found_list = find_list(board, id)
-    found_list.update(data)
+  def update_list(board, list_name, data)
+    found_list = board.lists.select { |list| list.name == list_name }
+    found_list.update_list_name(data)
     persist_json
   end
 
-  def delete_list(board, id)
-    board.lists.delete_if { |list| list.id == id }
+  def delete_list(board, list_name)
+    board.delete_list(list_name)
     persist_json
   end
 
-  def add_card(list, card)
-    list.cards << card
+  def add_card(list, data)
+    list.create_card(data)
     persist_json
   end
 
@@ -68,8 +68,8 @@ class Store
   end
 
   def delete_card(id)
-    list = find_list_given_card_id(id)
-    list.cards.delete_if { |card| card.id == id }
+    list_found = find_list_given_card_id(id)
+    list_found.delete_card(id)
     persist_json
   end
 
@@ -88,18 +88,17 @@ class Store
   end
 
   def add_checklist(card, checklist)
-    card.checklist << checklist
+    card.add_checklist(checklist)
     persist_json
   end
 
   def toggle_checklist(card, index)
-    checklist = card.checklist[index]
-    checklist[:completed] = !checklist[:completed]
+    card.toggle_checklist(index)
     persist_json
   end
 
   def delete_checklist(card, index)
-    card.checklist.delete_at(index - 1)
+    card.delete_checklist(index)
     persist_json
   end
 end

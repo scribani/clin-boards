@@ -53,4 +53,13 @@ module Prompter
     due_date = gets.chomp
     { title: title, members: members, labels: labels, due_date: due_date }
   end
+
+  def list_selection_form(options)
+    list = ""
+    until options.include?(list)
+      print "Select a list: "
+      list = gets.chomp.downcase
+    end
+    list
+  end
 end

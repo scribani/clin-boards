@@ -32,9 +32,8 @@ class ClinBoards
   end
 
   def update_board(id)
-    board_updated = board_form
-    @store.update_board(id, board_updated)
-    puts "update_board(#{id})" # HARDCODE!!!
+    board_data = board_form
+    @store.update_board(id, board_data)
   end
 
   def delete_board(id)
@@ -61,14 +60,14 @@ class ClinBoards
   end
 
   def update_list(board_selected, id_or_list)
-    id = id_or_list.to_i
+    list_name = id_or_list
     list_data = list_form
-    @store.update_list(board_selected, id, list_data)
+    @store.update_list(board_selected, list_name, list_data)
   end
 
   def delete_list(board_selected, id_or_list)
-    id = id_or_list.to_i
-    @store.delete_list(board_selected, id)
+    list_name = id_or_list
+    @store.delete_list(board_selected, list_name)
   end
 
   def create_card(board_selected, _id_or_list)
@@ -92,7 +91,8 @@ class ClinBoards
   # From here we have methods that are used in card_checklist view
   def checklist(_board_selected, id_or_list)
     id = id_or_list.to_i
-    card_selected = @store.find_card(id)
+    list_selected = @store.find_list_given_card_id(id)
+    card_selected = @store.find_card(list_selected, id)
 
     action = ""
     until action == "back"

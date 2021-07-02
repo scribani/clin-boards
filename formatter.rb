@@ -53,13 +53,4 @@ module Formatter
     end
     puts list_arr.join(" | ")
   end
-
-  def list_selection_form(options)
-    list = ""
-    until options.include?(list)
-      print "Select a list: "
-      list = gets.chomp.downcase
-    end
-    list
-  end
 end

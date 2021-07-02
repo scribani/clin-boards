@@ -15,6 +15,15 @@ class Boards
     @description = data[:description] unless data[:description].empty?
   end
 
+  def add_list(data)
+    list = List.new(data)
+    @lists << list
+  end
+
+  def delete_list(list_name)
+    @lists.delete_if { |list| list.name == list_name }
+  end
+
   def to_json(*_args)
     { id: @id, name: @name, description: @description, lists: @lists }.to_json
   end
