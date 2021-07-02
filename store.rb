@@ -27,4 +27,9 @@ class Store
 
     list_selected.cards.find { |card| card.id == card_id }
   end
+
+  def add_checklist(card, checklist)
+    card.checklist << checklist
+    persist_json
+  end
 end

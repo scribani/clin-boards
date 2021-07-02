@@ -44,12 +44,22 @@ class ClinBoards
   def show_card_checklist(id)
     card_selected = @store.find_card(id)
 
+    action = ""
     until action == "back"
       print_card_checklist(card_selected)
       action, index = checklist_menu
       action_sym = "#{action}_checklist".to_sym
 
-      methods.include?(action_sym) ? method(action_sym).call(index) : puts("Invalid option")
+      methods.include?(action_sym) ? method(action_sym).call(card_selected, index) : puts("Invalid option")
     end
   end
+
+  def add_checklist(_card_selected, _index)
+    checklist_data = checklist_form
+    @store.add_checklist(checklist_data)
+  end
+
+  def toggle_checklist(card_selected, index); end
+
+  def delete_checklist(card_selected, index); end
 end
