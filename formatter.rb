@@ -51,8 +51,27 @@ module Formatter
         end
       end
     end
+
+    def self.print_card_checklist
+      collection = [
+        { "title": "Create List class", "checklist": [
+          { "title": "Define initialize method", "completed": true },
+          { "title": "Add public methods", "completed": false },
+          { "title": "Share with the team for feedback", "completed": false }
+        ] }
+      ]
+      puts "Card: #{collection[0][:title]}"
+
+      collection[0][:checklist].each_with_index do |checklist, idx|
+        toggle = checklist[:completed] ? "x" : " "
+        puts "[#{toggle}] #{idx + 1}. #{checklist[:title]}"
+      end
+
+      puts "-------------------------------------"
+    end
   end
 end
 
-Formatter::Test.print_boards
-Formatter::Test.print_lists
+# Formatter::Test.print_boards
+# Formatter::Test.print_lists
+Formatter::Test.print_card_checklist
