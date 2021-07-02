@@ -75,6 +75,11 @@ class ClinBoards
     list_data = list_form
     @store.update_list(board_selected, id, list_data)
   end
+
+  def delete_list(board_selected, id_or_list)
+    id = id_or_list.to_i
+    @store.delete_list(board_selected, id)
+  end
 end
 
 app = ClinBoards.new
