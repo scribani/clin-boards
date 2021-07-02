@@ -10,8 +10,8 @@ module Prompter
     puts "List options: create-list | update-list LISTNAME | delete-list LISTNAME"
     puts "Card options: create-card | checklist ID | update-card ID | delete-card ID\nback"
     print "> "
-    action, id_list = gets.chomp.split
-    [action, id_list]
+    action, id_or_list = gets.chomp.split
+    [action, id_or_list]
   end
 
   def checklist_menu

@@ -9,7 +9,6 @@ class ClinBoards
   end
 
   def start
-    welcome
     action = ""
     until action == "exit"
       print "Enter action: " # HARDCODE!!!
@@ -20,14 +19,6 @@ class ClinBoards
 
       methods.include?(action_sym) ? method(action_sym).call(id) : puts("Invalid option")
     end
-  end
-
-  def welcome
-    puts [
-      "####################################",
-      "#      Welcome to CLIn Boards      #",
-      "####################################"
-    ]
   end
 
   def create_board(_id)
@@ -61,12 +52,17 @@ class ClinBoards
     @store.delete_board(id)
   end
 
-  def goodbye
-    puts [
-      "\n####################################",
-      "#   Thanks for using CLIn Boards   #",
-      "####################################\n\n"
-    ]
+  def show_lists(id)
+    board_selected = @store.find_board(id)
+
+    action = ""
+    until action == "back"
+      print_lists(board_selected)
+      action, id_or_list = list_menu # second value could be ID or LISTNAME
+      action_sym = "#{action}_list".to_sym
+
+      methods.include?(action_sym) ? method(action_sym).call(board_selected, id_or_list) : puts("Invalid option")
+    end
   end
 end
 

@@ -29,26 +29,19 @@ module Formatter
     end
   end
 
-  def print_lists
-    collection = [ # HARDCODE!!!
-      { "id": 1, "name": "Todos", "cards": [
-        {
-          "id": 8, "title": "Do something nice", "members": %w[Ana Andres Luis],
-          "labels": ["project"], "due_date": "2021-06-03", "checklist": []
-        }
-      ] },
-      { "id": 2, "name": "In Progress", "cards": [
-        {
-          "id": 4, "title": "Create List class", "members": ["Deyvi"],
-          "labels": %w[coding challenge], "due_date": "2020-11-19", "checklist": []
-        }
-      ] }
-    ]
-    collection.each do |list|
-      print_content(list[:name], %w[ID Title Members Labels Due Date Checklist], list[:cards]) do |c|
-        [c[:id], c[:title], c[:members].join(", "), c[:labels].join(", "), c[:due_date], c[:checklist]]
+  def print_lists(board)
+    board.lists.each do |list|
+      print_content(list.name, %w[ID Title Members Labels Due Date Checklist], list.cards) do |card|
+        done = completed_over_total(card)
+        [card.id, card.title, card.members.join(", "), card.labels.join(", "), card.due_date, done]
       end
     end
+  end
+
+  def completed_over_total(card)
+    size = card.checklist.size
+    checked = card.checklist.count { |item| item[:completed] }
+    "#{checked}/#{size}"
   end
 
   def print_card_checklist
