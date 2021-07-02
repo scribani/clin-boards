@@ -19,19 +19,11 @@ class Card
     @due_date = data[:due_date] unless data[:due_date].empty?
   end
 
-  def add_checklist(data)
-    @checklist << data
-  end
-
-  def delete_checklist(index)
-    @checklist.delete_at(index)
-  end
-
   def self.next_id
     @id_sequence += 1
   end
 
   def to_json(*_args)
-    { id: @id, title: @title, members: @members, labels: @labels, due_date: @due_date }.to_json
+    { id: @id, title: @title, members: @members, labels: @labels, due_date: @due_date, checklist: @checklist }.to_json
   end
 end
