@@ -13,7 +13,6 @@ module Formatter
     print_content("CLIn Boards", %w[ID Name Description List(#cards)], @boards) do |board|
       list_arr = []
       board.lists.each do |list|
-        list_arr = []
         list_arr << "#{list.name}(#{list.cards.size})"
       end
       [board.id, board.name, board.description, list_arr.join(", ")]
@@ -22,7 +21,7 @@ module Formatter
 
   def print_lists(board)
     board.lists.each do |list|
-      print_content(list.name, %w[ID Title Members Labels Due Date Checklist], list.cards) do |card|
+      print_content(list.name, %w[ID Title Members Labels Due\ Date Checklist], list.cards) do |card|
         done = completed_over_total(card)
         [card.id, card.title, card.members.join(", "), card.labels.join(", "), card.due_date, done]
       end

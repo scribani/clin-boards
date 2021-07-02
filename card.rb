@@ -3,13 +3,14 @@ class Card
 
   @id_sequence = 0
 
-  def initialize(title:, members: [], labels: [], due_date: nil)
-    @id = self.class.next_id
-    @title = title
-    @members = members
-    @labels = labels
-    @due_date = due_date
-    @checklist = []
+  def initialize(card_properties)
+    @id = card_properties[:id] || self.class.next_id
+    self.class.sequence = @id if card_properties[:id]
+    @title = card_properties[:title]
+    @members = card_properties[:members] || []
+    @labels = card_properties[:labels] || []
+    @due_date = card_properties[:due_date] || nil
+    @checklist = card_properties[:checklist] || []
   end
 
   def update(data)
@@ -34,6 +35,10 @@ class Card
 
   def self.next_id
     @id_sequence += 1
+  end
+
+  def self.sequence=(id)
+    @id_sequence = id
   end
 
   def to_json(*_args)

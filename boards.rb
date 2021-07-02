@@ -1,13 +1,16 @@
+require_relative "list"
+
 class Boards
   attr_reader :id, :name, :description, :lists
 
   @id_sequence = 0
 
-  def initialize(name:, description:, id: nil)
+  def initialize(name:, description:, lists: [], id: nil)
     @id = id || self.class.next_id
+    self.class.sequence = @id if id
     @name = name
     @description = description
-    @lists = lists.map { |list| List.new list }
+    @lists = lists.empty? ? [] : lists.map { |list| List.new list }
   end
 
   def update(data)

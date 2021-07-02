@@ -1,8 +1,11 @@
 require "json"
 require_relative "boards"
+require_relative "prompter"
 
 class Store
   attr_accessor :boards
+
+  include Prompter
 
   def initialize(filename)
     @filename = filename
@@ -44,9 +47,10 @@ class Store
     board.lists.find { |list| list.id == id }
   end
 
-  def update_list(board, list_name, data)
-    found_list = board.lists.select { |list| list.name == list_name }
-    found_list.update_list_name(data)
+  def update_list(board, list_name)
+    found_list = board.lists.find { |list| list.name == list_name }
+    new_name = list_form
+    found_list.update_list_name(new_name)
     persist_json
   end
 
@@ -78,7 +82,7 @@ class Store
   end
 
   def find_list_given_card_id(card_id)
-    @boards.lists.select do |list|
+    @boards.lists.find do |list|
       list.cards.find { |card| card.id == card_id }
     end
   end

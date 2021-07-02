@@ -19,7 +19,7 @@ class ClinBoards
       action, id = main_menu
       action_sym = "#{action}_board".to_sym
 
-      return goodbye if action == "exit"
+      return if action == "exit"
 
       methods.include?(action_sym) ? method(action_sym).call(id) : puts("Invalid option")
     end
@@ -50,6 +50,8 @@ class ClinBoards
       action, id_or_list = list_menu # second value could be ID or LISTNAME
       action_sym = action.to_sym
 
+      return start if action == "back"
+
       methods.include?(action_sym) ? method(action_sym).call(board_selected, id_or_list) : puts("Invalid option")
     end
   end
@@ -61,8 +63,7 @@ class ClinBoards
 
   def update_list(board_selected, id_or_list)
     list_name = id_or_list
-    list_data = list_form
-    @store.update_list(board_selected, list_name, list_data)
+    @store.update_list(board_selected, list_name)
   end
 
   def delete_list(board_selected, id_or_list)
@@ -99,6 +100,8 @@ class ClinBoards
       print_card_checklist(card_selected)
       action, index = checklist_menu
       action_sym = "#{action}_checklist".to_sym
+
+      return show_board if action == "back"
 
       methods.include?(action_sym) ? method(action_sym).call(card_selected, index) : puts("Invalid option")
     end

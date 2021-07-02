@@ -1,16 +1,23 @@
+require_relative "card"
+
 class List
   attr_reader :id, :name, :cards
 
   @id_secuence = 0
 
-  def initialize(name)
-    @id = self.class.next_id
+  def initialize(name:, cards: [], id: nil)
+    @id = id || self.class.next_id
+    self.class.sequence = @id if id
     @name = name
-    @card = []
+    @cards = cards.empty? ? [] : cards.map { |card| Card.new card }
   end
 
   def self.next_id
     @id_secuence += 1
+  end
+
+  def self.sequence=(id)
+    @id_sequence = id
   end
 
   def create_card(data)
@@ -24,8 +31,8 @@ class List
     end
   end
 
-  def update_list_name(new_name)
-    @name = new_name
+  def update_list_name(name:)
+    @name = name
   end
 
   def to_json(*_args)
