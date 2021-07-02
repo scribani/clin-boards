@@ -31,6 +31,11 @@ class Store
     persist_json
   end
 
+  def add_list(board, list)
+    board.lists << list
+    persist_json
+  end
+
   def persist_json
     File.write(@filename, @playlists.to_json)
   end
