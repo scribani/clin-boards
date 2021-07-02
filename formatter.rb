@@ -10,22 +10,13 @@ module Formatter
   end
 
   def print_boards
-    collection = [ # HARDCODE!!!
-      {
-        "id": 1,
-        "name": "Extended - CLIn Boards",
-        "description": "Task management for the last extended",
-        "lists": [0, 1, 2, 3]
-      },
-      {
-        "id": 2,
-        "name": "Test - CLIn Boards",
-        "description": "May Rubocop have mercy upon us",
-        "lists": [0, 1]
-      }
-    ]
-    print_content("CLIn Boards", %w[ID Name Description List(#cards)], collection) do |board|
-      [board[:id], board[:name], board[:description], "List(#{board[:lists].size})"] # HARDCODE!!!
+    print_content("CLIn Boards", %w[ID Name Description List(#cards)], @boards) do |board|
+      list_arr = []
+      board.lists.each do |list|
+        list_arr = []
+        list_arr << "#{list.name}(#{list.cards.size})"
+      end
+      [board.id, board.name, board.description, list_arr.join(", ")]
     end
   end
 
@@ -44,19 +35,12 @@ module Formatter
     "#{checked}/#{size}"
   end
 
-  def print_card_checklist
-    collection = [
-      { "title": "Create List class", "checklist": [
-        { "title": "Define initialize method", "completed": true },
-        { "title": "Add public methods", "completed": false },
-        { "title": "Share with the team for feedback", "completed": false }
-      ] }
-    ]
-    puts "Card: #{collection[0][:title]}"
+  def print_card_checklist(card)
+    puts "Card: #{card.title}"
 
-    collection[0][:checklist].each_with_index do |checklist, idx|
-      toggle = checklist[:completed] ? "x" : " "
-      puts "[#{toggle}] #{idx + 1}. #{checklist[:title]}"
+    card.checklist.each_with_index do |item, index|
+      toggle = item[:completed] ? "x" : " "
+      puts "[#{toggle}] #{index + 1}. #{item[:title]}"
     end
 
     puts "-------------------------------------"

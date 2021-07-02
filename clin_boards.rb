@@ -3,16 +3,20 @@ require_relative "prompter"
 require_relative "formatter"
 
 class ClinBoards
-  def initialize(_store = "store.json")
+  include Formatter
+  include Prompter
+
+  def initialize(store = "store.json")
     @store = Store.new(store)
-    @board = @store.boards
+    @boards = @store.boards
   end
 
+  # From here we have methods that are used in boards view
   def start
     action = ""
     until action == "exit"
-      print "Enter action: " # HARDCODE!!!
-      action, id = gets.chomp.split # HARDCODE!!!
+      print_boards
+      action, id = main_menu
       action_sym = "#{action}_board".to_sym
 
       return goodbye if action == "exit"
@@ -22,24 +26,9 @@ class ClinBoards
   end
 
   def create_board(_id)
-    board_list = board_form
-    board_new = Boards.new(board_list)
+    board_data = board_form
+    board_new = Boards.new(board_data)
     @store.add_board(board_new)
-  end
-
-  def show_board(id)
-    board_founded = @store.find_board(id)
-    action = ""
-    until action == "back"
-      print_lists board_founded
-      action, _item = list_menu
-      case action
-      when "create-list" then puts "create-list " # HC!
-      when "update-list LISTNAME" then puts "update " # HC!
-      when "delete-list LISTNAME" then puts "delete " # HC!
-      when "create-card" then puts " create-card checklist ID update-card ID" # HC!
-      end
-    end
   end
 
   def update_board(id)
@@ -52,6 +41,7 @@ class ClinBoards
     @store.delete_board(id)
   end
 
+  # From here we have methods that are used in lists view
   def show_lists(id)
     board_selected = @store.find_board(id)
 
@@ -87,7 +77,31 @@ class ClinBoards
     card_data = card_form
     @store.add_card(list, card_data)
   end
-end
 
-app = ClinBoards.new
-app.start
+  # From here we have methods that are used in card_checklist view
+  def show_card_checklist(id)
+    card_selected = @store.find_card(id)
+
+    action = ""
+    until action == "back"
+      print_card_checklist(card_selected)
+      action, index = checklist_menu
+      action_sym = "#{action}_checklist".to_sym
+
+      methods.include?(action_sym) ? method(action_sym).call(card_selected, index) : puts("Invalid option")
+    end
+  end
+
+  def add_checklist(card_selected, _index)
+    checklist_data = checklist_form
+    @store.add_checklist(card_selected, checklist_data)
+  end
+
+  def toggle_checklist(card_selected, index)
+    @store.toggle_checklist(card_selected, index)
+  end
+
+  def delete_checklist(card_selected, index)
+    @store.delete_checklist(card_selected, index)
+  end
+end

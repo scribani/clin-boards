@@ -17,6 +17,85 @@ class Store
 
   def add_board(board)
     @boards << board
-    # File.write(@filename, @boards.to_json)
+    persist_json
+  end
+
+  def find_board(id)
+    @boards.find { |board| board.id == id }
+  end
+
+  def update_board(id, data)
+    found_board = find_board(id)
+    found_board.update(data)
+    persist_json
+  end
+
+  def delete_board(id)
+    @boards.delete_if { |board| board.id == id }
+    persist_json
+  end
+
+  def add_list(board, list)
+    board.lists << list
+    persist_json
+  end
+
+  def find_list(board, id)
+    board.lists.find { |list| list.id == id }
+  end
+
+  def update_list(board, id, data)
+    found_list = find_list(board, id)
+    found_list.update(data)
+    persist_json
+  end
+
+  def delete_list(board, id)
+    board.lists.delete_if { |list| list.id == id }
+    persist_json
+  end
+
+  def add_card(list, card)
+    list.cards << card
+    persist_json
+  end
+
+  def update_card(list, id, data)
+    found_card = find_card(list, id)
+    found_card.update(data)
+    persist_json
+  end
+
+  def delete_card(list, id)
+    list.cards.delete_if { |card| card.id == id }
+    persist_json
+  end
+
+  def persist_json
+    File.write(@filename, @boards.to_json)
+  end
+
+  def find_card(card_id)
+    list_selected = @boards.lists.select do |list|
+      list.cards.find { |card| card.id == card_id }
+    end
+
+    list_selected.cards.find { |card| card.id == card_id }
+  end
+
+  def add_checklist(card, checklist)
+    card.checklist << checklist
+    persist_json
+  end
+
+  def toggle_checklist(card, index)
+    checklist = card.checklist[index]
+    checklist[:completed] = !checklist[:completed]
+    persist_json
+  end
+
+  def delete_checklist(card, index)
+    card.checklist.delete_at(index - 1)
+    persist_json
   end
 end
