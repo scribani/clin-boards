@@ -8,6 +8,7 @@ class ClinBoards
     @board = @store.boards
   end
 
+  # From here we have methods that are used in boards view
   def start
     action = ""
     until action == "exit"
@@ -37,5 +38,18 @@ class ClinBoards
 
   def delete_board(id)
     puts "delete_board(#{id})" # HARDCODE!!!
+  end
+
+  # From here we have methods that are used in card_checklist view
+  def show_card_checklist(id)
+    card_selected = @store.find_card(id)
+
+    until action == "back"
+      print_card_checklist(card_selected)
+      action, index = checklist_menu
+      action_sym = "#{action}_checklist".to_sym
+
+      methods.include?(action_sym) ? method(action_sym).call(index) : puts("Invalid option")
+    end
   end
 end

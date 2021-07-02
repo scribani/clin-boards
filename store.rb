@@ -19,4 +19,12 @@ class Store
     @boards << board
     # File.write(@filename, @boards.to_json)
   end
+
+  def find_card(card_id)
+    list_selected = @boards.lists.select do |list|
+      list.cards.find { |card| card.id == card_id }
+    end
+
+    list_selected.cards.find { |card| card.id == card_id }
+  end
 end
