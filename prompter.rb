@@ -30,11 +30,9 @@ module Prompter
   end
 
   def checklist_form
-    print "Title: "
-    title = gets.chomp
     print "Card: "
     card = gets.chomp
-    { card: card, title: title }
+    { card: card, completed: false }
   end
 
   def list_form
@@ -44,8 +42,6 @@ module Prompter
   end
 
   def card_form
-    print "Select a list: "
-    # puts imprimir la lista de listas map. or each
     list = gets.chomp
     print "Title: "
     title = gets.chomp
