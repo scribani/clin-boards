@@ -3,11 +3,12 @@ class Boards
 
   @id_sequence = 0
 
-  def initialize(name:, description:, lists: [], id: nil)
+  # it should be like this, the class lists is not yet (name:, description:, lists: [], id: nil
+  def initialize(name:, description:, id: nil)
     @id = id || self.class.next_id
     @name = name
     @description = description
-    #@lists = lists.map { |list| List.new list }
+    # @lists = lists.map { |list| List.new list }
   end
 
   def update(data)

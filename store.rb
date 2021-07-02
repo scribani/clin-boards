@@ -17,6 +17,6 @@ class Store
 
   def add_board(board)
     @boards << board
-    #File.write(@filename, @boards.to_json)
+    # File.write(@filename, @boards.to_json)
   end
 end

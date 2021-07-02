@@ -5,7 +5,7 @@ require_relative "prompter"
 
 class ClinBoards
   include Prompter
-  def initialize (store)
+  def initialize(store)
     @store = Store.new(store)
     @boards = @store.boards
   end
