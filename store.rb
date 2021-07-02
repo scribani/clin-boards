@@ -65,6 +65,11 @@ class Store
     persist_json
   end
 
+  def delete_card(list, id)
+    list.cards.delete_if { |card| card.id == id }
+    persist_json
+  end
+
   def persist_json
     File.write(@filename, @playlists.to_json)
   end
