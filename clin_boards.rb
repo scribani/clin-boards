@@ -8,6 +8,7 @@ class ClinBoards
   end
 
   def start
+    welcome
     action = ""
     until action == "exit"
       print "Enter action: " # HARDCODE!!!
@@ -18,6 +19,14 @@ class ClinBoards
 
       methods.include?(action_sym) ? method(action_sym).call(id) : puts("Invalid option")
     end
+  end
+
+  def welcome
+    puts [
+      "####################################",
+      "#      Welcome to CLIn Boards      #",
+      "####################################"
+    ]
   end
 
   def create_board(_id)
