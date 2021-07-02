@@ -1,8 +1,11 @@
 require "json"
 require_relative "boards"
+require_relative "formatter"
 
 class Store
   attr_accessor :boards
+
+  include Formatter
 
   def initialize(filename)
     @filename = filename
@@ -25,8 +28,8 @@ class Store
   end
 
   def update_board(id, data)
-    found = find_board(id)
-    found.update(data)
+    found_board = find_board(id)
+    found_board.update(data)
     persist_json
   end
 
@@ -41,8 +44,8 @@ class Store
   end
 
   def update_list(board, id, data)
-    found_song = board.lists.find { |list| list.id == id }
-    found_song.update(data)
+    found_list = board.lists.find { |list| list.id == id }
+    found_list.update(data)
     persist_json
   end
 
@@ -51,8 +54,8 @@ class Store
     persist_json
   end
 
-  def add_card
-    @lists << list
+  def add_card(list, card)
+    list.cards << card
     persist_json
   end
 
