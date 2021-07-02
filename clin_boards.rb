@@ -1,5 +1,6 @@
-require_relative "formatter"
+require_relative "store"
 require_relative "prompter"
+require_relative "formatter"
 
 class ClinBoards
   include Formatter
@@ -33,7 +34,9 @@ class ClinBoards
   end
 
   def create_board(_id)
-    puts "create_board" # HARDCODE!!!
+    board_list = board_form
+    board_new = Boards.new(board_list)
+    @store.add_board(board_new)
   end
 
   def show_board(id)
