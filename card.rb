@@ -32,6 +32,6 @@ class Card
   end
 
   def to_json(*_args)
-    { id: @id, title: @title, members: @members, labels: @labels, due_date: @due_date }
+    { id: @id, title: @title, members: @members, labels: @labels, due_date: @due_date }.to_json
   end
 end
