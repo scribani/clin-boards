@@ -32,9 +32,7 @@ module Prompter
   def checklist_form
     print "Title: "
     title = gets.chomp
-    print "Card: "
-    card = gets.chomp
-    { card: card, title: title }
+    { title: title, completed: false }
   end
 
   def list_form
@@ -44,9 +42,6 @@ module Prompter
   end
 
   def card_form
-    # print "Select a list: " -> Should be moved to the method that calls card_form due to Metrics/AbcSize
-    # print_lists_names - > -> Should be moved to the method that calls card_form due to Metrics/AbcSize
-    list = gets.chomp
     print "Title: "
     title = gets.chomp
     print "Members: "
@@ -55,6 +50,6 @@ module Prompter
     labels = gets.chomp
     print "Due Date: "
     due_date = gets.chomp
-    { list: list, title: title, members: members, labels: labels, due_date: due_date }
+    { title: title, members: members, labels: labels, due_date: due_date }
   end
 end

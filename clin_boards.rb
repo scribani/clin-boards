@@ -40,15 +40,28 @@ class ClinBoards
   end
 
   def show_board(id)
-    puts "show_board(#{id})" # HARDCODE!!!
+    board_founded = @store.find_board(id)
+    action = ""
+    until action == "back"
+      print_lists board_founded
+      action, _item = list_menu
+      case action
+      when "create-list" then puts "create-list " # HC!
+      when "update-list LISTNAME" then puts "update " # HC!
+      when "delete-list LISTNAME" then puts "delete " # HC!
+      when "create-card" then puts " create-card checklist ID update-card ID" # HC!
+      end
+    end
   end
 
   def update_board(id)
+    board_updated = board_form
+    @store.update_board(id, board_updated)
     puts "update_board(#{id})" # HARDCODE!!!
   end
 
   def delete_board(id)
-    puts "delete_board(#{id})" # HARDCODE!!!
+    @store.delete_board(id)
   end
 
   def goodbye
