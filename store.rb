@@ -78,4 +78,28 @@ class Store
   def persist_json
     File.write(@filename, @boards.to_json)
   end
+
+  def find_card(card_id)
+    list_selected = @boards.lists.select do |list|
+      list.cards.find { |card| card.id == card_id }
+    end
+
+    list_selected.cards.find { |card| card.id == card_id }
+  end
+
+  def add_checklist(card, checklist)
+    card.checklist << checklist
+    persist_json
+  end
+
+  def toggle_checklist(card, index)
+    checklist = card.checklist[index]
+    checklist[:completed] = !checklist[:completed]
+    persist_json
+  end
+
+  def delete_checklist(card, index)
+    card.checklist.delete_at(index - 1)
+    persist_json
+  end
 end

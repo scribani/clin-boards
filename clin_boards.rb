@@ -11,8 +11,8 @@ class ClinBoards
     @boards = @store.boards
   end
 
+  # From here we have methods that are used in boards view
   def start
-    welcome
     action = ""
     until action == "exit"
       print_boards
@@ -23,14 +23,6 @@ class ClinBoards
 
       methods.include?(action_sym) ? method(action_sym).call(id) : puts("Invalid option")
     end
-  end
-
-  def welcome
-    puts [
-      "####################################",
-      "#      Welcome to CLIn Boards      #",
-      "####################################"
-    ]
   end
 
   def create_board(_id)
@@ -64,14 +56,30 @@ class ClinBoards
     @store.delete_board(id)
   end
 
-  def goodbye
-    puts [
-      "\n####################################",
-      "#   Thanks for using CLIn Boards   #",
-      "####################################\n\n"
-    ]
+  # From here we have methods that are used in card_checklist view
+  def show_card_checklist(id)
+    card_selected = @store.find_card(id)
+
+    action = ""
+    until action == "back"
+      print_card_checklist(card_selected)
+      action, index = checklist_menu
+      action_sym = "#{action}_checklist".to_sym
+
+      methods.include?(action_sym) ? method(action_sym).call(card_selected, index) : puts("Invalid option")
+    end
+  end
+
+  def add_checklist(card_selected, _index)
+    checklist_data = checklist_form
+    @store.add_checklist(card_selected, checklist_data)
+  end
+
+  def toggle_checklist(card_selected, index)
+    @store.toggle_checklist(card_selected, index)
+  end
+
+  def delete_checklist(card_selected, index)
+    @store.delete_checklist(card_selected, index)
   end
 end
-
-app = ClinBoards.new
-app.start
