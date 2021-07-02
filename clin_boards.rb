@@ -6,7 +6,7 @@ class ClinBoards
   include Formatter
   include Prompter
 
-  def initialize(_store = "store.json")
+  def initialize(store = "store.json")
     @store = Store.new(store)
     @boards = @store.boards
   end
@@ -34,8 +34,8 @@ class ClinBoards
   end
 
   def create_board(_id)
-    board_list = board_form
-    board_new = Boards.new(board_list)
+    board_data = board_form
+    board_new = Boards.new(board_data)
     @store.add_board(board_new)
   end
 

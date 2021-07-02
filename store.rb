@@ -17,6 +17,16 @@ class Store
 
   def add_board(board)
     @boards << board
-    # File.write(@filename, @boards.to_json)
+    persist_json
+  end
+
+  def update_board(id, data)
+    found = find_board(id)
+    found.update(data)
+    persist_json
+  end
+
+  def persist_json
+    File.write(@filename, @playlists.to_json)
   end
 end
