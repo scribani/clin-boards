@@ -59,10 +59,15 @@ class ClinBoards
     until action == "back"
       print_lists(board_selected)
       action, id_or_list = list_menu # second value could be ID or LISTNAME
-      action_sym = "#{action}_list".to_sym
+      action_sym = action.to_sym
 
       methods.include?(action_sym) ? method(action_sym).call(board_selected, id_or_list) : puts("Invalid option")
     end
+  end
+
+  def create_list(board_selected, _id_or_list)
+    list_data = list_form
+    @store.add_list(board_selected, list_data)
   end
 end
 
