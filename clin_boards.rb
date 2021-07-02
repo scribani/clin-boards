@@ -49,6 +49,7 @@ class ClinBoards
   end
 
   def delete_board(id)
+    # look for the store delete in the store.rb @store.delete_board(id)
     puts "delete_board(#{id})" # HARDCODE!!!
   end
 
