@@ -63,5 +63,7 @@ class ClinBoards
     @store.toggle_checklist(card_selected, index)
   end
 
-  def delete_checklist(card_selected, index); end
+  def delete_checklist(card_selected, index)
+    @store.delete_checklist(card_selected, index)
+  end
 end

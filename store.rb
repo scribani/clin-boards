@@ -38,4 +38,9 @@ class Store
     checklist[:completed] = !checklist[:completed]
     persist_json
   end
+
+  def delete_checklist(card, index)
+    card.checklist.delete_at(index - 1)
+    persist_json
+  end
 end
