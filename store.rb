@@ -59,6 +59,12 @@ class Store
     persist_json
   end
 
+  def update_card(list, id, data)
+    found_card = list.cards.find { |card| card.id == id }
+    found_card.update(data)
+    persist_json
+  end
+
   def persist_json
     File.write(@filename, @playlists.to_json)
   end
