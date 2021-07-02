@@ -80,6 +80,13 @@ class ClinBoards
     id = id_or_list.to_i
     @store.delete_list(board_selected, id)
   end
+
+  def create_card(board_selected, _id_or_list)
+    options = print_lists_names(board_selected).downcase.split(" | ")
+    list = list_selection_form(options)
+    card_data = card_form
+    @store.add_card(list, card_data)
+  end
 end
 
 app = ClinBoards.new

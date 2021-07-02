@@ -61,4 +61,21 @@ module Formatter
 
     puts "-------------------------------------"
   end
+
+  def print_lists_names(board)
+    list_arr = []
+    board.lists.each do |list|
+      list_arr << list.name
+    end
+    puts list_arr.join(" | ")
+  end
+
+  def list_selection_form(options)
+    list = ""
+    until options.include?(list)
+      print "Select a list: "
+      list = gets.chomp.downcase
+    end
+    list
+  end
 end

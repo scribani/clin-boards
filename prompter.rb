@@ -43,7 +43,6 @@ module Prompter
   end
 
   def card_form
-    list = gets.chomp
     print "Title: "
     title = gets.chomp
     print "Members: "
@@ -52,6 +51,6 @@ module Prompter
     labels = gets.chomp
     print "Due Date: "
     due_date = gets.chomp
-    { list: list, title: title, members: members, labels: labels, due_date: due_date }
+    { title: title, members: members, labels: labels, due_date: due_date }
   end
 end
