@@ -26,6 +26,11 @@ class Store
     persist_json
   end
 
+  def delete_board(id)
+    @boards.delete_if { |board| board.id == id }
+    persist_json
+  end
+
   def persist_json
     File.write(@filename, @playlists.to_json)
   end
