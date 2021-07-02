@@ -59,4 +59,12 @@ module Formatter
 
     puts "-------------------------------------"
   end
+
+  def print_lists_names
+    list_arr = []
+    @lists.each do |list|
+      list_arr << list.name
+    end
+    puts list_arr.join(" | ")
+  end
 end

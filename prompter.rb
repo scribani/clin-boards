@@ -1,4 +1,8 @@
+require_relative "formatter"
+
 module Prompter
+  include Formatter
+
   def main_menu
     puts "Board options: create | show ID | update ID | delete ID\nexit"
     print "> "
@@ -44,8 +48,8 @@ module Prompter
   end
 
   def card_form
-    print "Select a list: "
-    # puts imprimir la lista de listas map. or each
+    # print "Select a list: " -> Should be moved to the method that calls card_form due to Metrics/AbcSize
+    # print_lists_names - > -> Should be moved to the method that calls card_form due to Metrics/AbcSize
     list = gets.chomp
     print "Title: "
     title = gets.chomp
