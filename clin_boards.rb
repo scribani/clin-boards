@@ -84,6 +84,11 @@ class ClinBoards
     @store.update_card(id, card_data)
   end
 
+  def delete_card(_board_selected, id_or_list)
+    id = id_or_list.to_i
+    @store.delete_card(id)
+  end
+
   # From here we have methods that are used in card_checklist view
   def checklist(_board_selected, id_or_list)
     id = id_or_list.to_i

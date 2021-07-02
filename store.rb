@@ -61,12 +61,14 @@ class Store
   end
 
   def update_card(id, data)
-    found_card = find_card(id)
+    list_found = find_list_given_card_id(id)
+    found_card = find_card(list_found, id)
     found_card.update(data)
     persist_json
   end
 
-  def delete_card(list, id)
+  def delete_card(id)
+    list = find_list_given_card_id(id)
     list.cards.delete_if { |card| card.id == id }
     persist_json
   end
@@ -75,12 +77,14 @@ class Store
     File.write(@filename, @boards.to_json)
   end
 
-  def find_card(card_id)
-    list_selected = @boards.lists.select do |list|
+  def find_list_given_card_id(card_id)
+    @boards.lists.select do |list|
       list.cards.find { |card| card.id == card_id }
     end
+  end
 
-    list_selected.cards.find { |card| card.id == card_id }
+  def find_card(list, card_id)
+    list.cards.find { |card| card.id == card_id }
   end
 
   def add_checklist(card, checklist)
