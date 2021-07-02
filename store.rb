@@ -1,5 +1,5 @@
 require "json"
-require_relative "list_boards"
+require_relative "boards"
 
 class Store
   attr_accessor :boards
