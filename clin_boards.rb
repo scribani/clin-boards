@@ -69,6 +69,12 @@ class ClinBoards
     list_data = list_form
     @store.add_list(board_selected, list_data)
   end
+
+  def update_list(board_selected, id_or_list)
+    id = id_or_list.to_i
+    list_data = list_form
+    @store.update_list(board_selected, id, list_data)
+  end
 end
 
 app = ClinBoards.new
