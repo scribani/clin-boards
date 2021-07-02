@@ -1,11 +1,8 @@
 require "json"
 require_relative "boards"
-require_relative "formatter"
 
 class Store
   attr_accessor :boards
-
-  include Formatter
 
   def initialize(filename)
     @filename = filename
