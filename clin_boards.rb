@@ -37,10 +37,14 @@ class ClinBoards
   end
 
   def show_board(id)
+    # board_founded = method of @store.find...(id) of store's class
+    print_lists # board_founded
     puts "show_board(#{id})" # HARDCODE!!!
   end
 
   def update_board(id)
+    _board_updated = board_form
+    # look for the store update in the store.rb @store.update_board(id, board_updated)
     puts "update_board(#{id})" # HARDCODE!!!
   end
 
