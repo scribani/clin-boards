@@ -43,8 +43,12 @@ class Store
     persist_json
   end
 
+  def find_list(board, id)
+    board.lists.find { |list| list.id == id }
+  end
+
   def update_list(board, id, data)
-    found_list = board.lists.find { |list| list.id == id }
+    found_list = find_list(board, id)
     found_list.update(data)
     persist_json
   end
@@ -59,8 +63,12 @@ class Store
     persist_json
   end
 
+  def find_card(list, id)
+    list.cards.find { |card| card.id == id }
+  end
+
   def update_card(list, id, data)
-    found_card = list.cards.find { |card| card.id == id }
+    found_card = find_card(list, id)
     found_card.update(data)
     persist_json
   end
