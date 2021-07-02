@@ -54,9 +54,9 @@ class ClinBoards
     end
   end
 
-  def add_checklist(_card_selected, _index)
+  def add_checklist(card_selected, _index)
     checklist_data = checklist_form
-    @store.add_checklist(checklist_data)
+    @store.add_checklist(card_selected, checklist_data)
   end
 
   def toggle_checklist(card_selected, index)
