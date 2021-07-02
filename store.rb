@@ -36,6 +36,12 @@ class Store
     persist_json
   end
 
+  def update_list(board, id, data)
+    found_song = board.lists.find { |list| list.id == id }
+    found_song.update(data)
+    persist_json
+  end
+
   def persist_json
     File.write(@filename, @playlists.to_json)
   end
