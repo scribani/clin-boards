@@ -42,7 +42,7 @@ class ClinBoards
   end
 
   # From here we have methods that are used in lists view
-  def show_lists(id)
+  def show_board(id)
     board_selected = @store.find_board(id)
 
     action = ""
@@ -78,8 +78,15 @@ class ClinBoards
     @store.add_card(list, card_data)
   end
 
+  def update_card(_board_selected, id_or_list)
+    id = id_or_list.to_i
+    card_data = card_form
+    @store.update_card(id, card_data)
+  end
+
   # From here we have methods that are used in card_checklist view
-  def show_card_checklist(id)
+  def checklist(_board_selected, id_or_list)
+    id = id_or_list.to_i
     card_selected = @store.find_card(id)
 
     action = ""

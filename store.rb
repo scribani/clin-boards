@@ -60,8 +60,8 @@ class Store
     persist_json
   end
 
-  def update_card(list, id, data)
-    found_card = find_card(list, id)
+  def update_card(id, data)
+    found_card = find_card(id)
     found_card.update(data)
     persist_json
   end
