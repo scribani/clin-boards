@@ -27,6 +27,10 @@ class Boards
     @lists.delete_if { |list| list.name == list_name }
   end
 
+  def find_list_by_name(name)
+    @lists.find { |list| p list.name == name }
+  end
+
   def to_json(*_args)
     { id: @id, name: @name, description: @description, lists: @lists }.to_json
   end
