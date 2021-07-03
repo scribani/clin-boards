@@ -5,12 +5,12 @@ class Card
 
   def initialize(card_properties)
     @id = card_properties[:id] || self.class.next_id
-    self.class.sequence = @id if card_properties[:id]
     @title = card_properties[:title]
     @members = card_properties[:members] || []
     @labels = card_properties[:labels] || []
     @due_date = card_properties[:due_date] || nil
     @checklist = card_properties[:checklist] || []
+    keep_biggest_id
   end
 
   def update(data)
@@ -33,15 +33,23 @@ class Card
     @checklist.delete_at(index - 1)
   end
 
+  def to_json(*_args)
+    { id: @id, title: @title, members: @members, labels: @labels, due_date: @due_date, checklist: @checklist }.to_json
+  end
+
   def self.next_id
     @id_sequence += 1
   end
 
-  def self.sequence=(id)
-    @id_sequence = id
+  def self.sequence_val
+    @id_sequence
   end
 
-  def to_json(*_args)
-    { id: @id, title: @title, members: @members, labels: @labels, due_date: @due_date, checklist: @checklist }.to_json
+  def keep_biggest_id
+    self.class.sequence = @id if @id > self.class.sequence_val
+  end
+
+  def self.sequence=(id)
+    @id_sequence = id
   end
 end

@@ -1,7 +1,7 @@
 require_relative "store"
 require_relative "prompter"
 require_relative "formatter"
-require_relative "extra_func"
+require_relative "validation_modules"
 
 class ClinBoards
   include Formatter

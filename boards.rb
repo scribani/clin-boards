@@ -7,10 +7,10 @@ class Boards
 
   def initialize(name:, description:, lists: [], id: nil)
     @id = id || self.class.next_id
-    self.class.sequence = @id if id
     @name = name
     @description = description
     @lists = lists.empty? ? [] : lists.map { |list| List.new list }
+    keep_biggest_id
   end
 
   def update(data)
@@ -28,18 +28,26 @@ class Boards
   end
 
   def find_list_by_name(name)
-    @lists.find { |list| p list.name == name }
+    @lists.find { |list| list.name == name }
   end
 
   def to_json(*_args)
     { id: @id, name: @name, description: @description, lists: @lists }.to_json
   end
 
-  def self.sequence=(id)
-    @id_sequence = id
-  end
-
   def self.next_id
     @id_sequence += 1
+  end
+
+  def self.sequence_val
+    @id_sequence
+  end
+
+  def keep_biggest_id
+    self.class.sequence = @id if @id > self.class.sequence_val
+  end
+
+  def self.sequence=(id)
+    @id_sequence = id
   end
 end

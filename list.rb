@@ -7,17 +7,9 @@ class List
 
   def initialize(name:, cards: [], id: nil)
     @id = id || self.class.next_id
-    self.class.sequence = @id if id
     @name = name
     @cards = cards.empty? ? [] : cards.map { |card| Card.new card }
-  end
-
-  def self.next_id
-    @id_sequence += 1
-  end
-
-  def self.sequence=(id)
-    @id_sequence = id
+    keep_biggest_id
   end
 
   def create_card(data)
@@ -37,5 +29,21 @@ class List
 
   def to_json(*_args)
     { id: @id, name: @name, cards: @cards }.to_json
+  end
+
+  def self.next_id
+    @id_sequence += 1
+  end
+
+  def self.sequence_val
+    @id_sequence
+  end
+
+  def keep_biggest_id
+    self.class.sequence = @id if @id > self.class.sequence_val
+  end
+
+  def self.sequence=(id)
+    @id_sequence = id
   end
 end
