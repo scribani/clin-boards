@@ -10,9 +10,9 @@ module Prompter
     puts "List options: create-list | update-list LISTNAME | delete-list LISTNAME"
     puts "Card options: create-card | checklist ID | update-card ID | delete-card ID\nback"
     print "> "
-    action, id_or_list = gets.chomp.split
+    action, *id_or_list = gets.chomp.split
     action.sub!("-", "_") if action.include?("-")
-    [action, id_or_list]
+    [action, id_or_list.join(" ")]
   end
 
   def checklist_menu
@@ -48,7 +48,7 @@ module Prompter
     print "Members: "
     members = gets.chomp.split(", ")
     print "Labels: "
-    labels = gets.chomp
+    labels = gets.chomp.split(", ")
     print "Due Date: "
     due_date = gets.chomp
     { title: title, members: members, labels: labels, due_date: due_date }
@@ -58,7 +58,7 @@ module Prompter
     list = ""
     until options.include?(list)
       print "Select a list: "
-      list = gets.chomp.downcase
+      list = gets.chomp
     end
     list
   end
