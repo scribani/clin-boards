@@ -17,12 +17,13 @@ class ClinBoards
     until action == "exit"
       print_boards
       action, id = main_menu
-      action_sym = "#{action}_board".to_sym
-
+      # ["create","show",]
       return if action == "exit"
 
+      action_sym = "#{action}_board".to_sym
       methods.include?(action_sym) ? method(action_sym).call(id) : puts("Invalid option")
     end
+ 
   end
 
   def create_board(_id)
@@ -43,17 +44,17 @@ class ClinBoards
   # From here we have methods that are used in lists view
   def show_board(id)
     board_selected = @store.find_board(id)
-
     action = ""
     until action == "back"
       print_lists(board_selected)
       action, id_or_list = list_menu # second value could be ID or LISTNAME
+
+      return  if action == "back"
+
       action_sym = action.to_sym
-
-      return start if action == "back"
-
       methods.include?(action_sym) ? method(action_sym).call(board_selected, id_or_list) : puts("Invalid option")
     end
+    
   end
 
   def create_list(board_selected, _id_or_list)
@@ -102,10 +103,10 @@ class ClinBoards
     until action == "back"
       print_card_checklist(card_selected)
       action, index = checklist_menu
+
+      return  if action == "back"
+
       action_sym = "#{action}_checklist".to_sym
-
-      return show_board(board_selected.id) if action == "back"
-
       methods.include?(action_sym) ? method(action_sym).call(card_selected, index) : puts("Invalid option")
     end
   end
