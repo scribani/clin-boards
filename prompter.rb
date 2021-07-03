@@ -48,7 +48,7 @@ module Prompter
     print "Members: "
     members = gets.chomp.split(", ")
     print "Labels: "
-    labels = gets.chomp
+    labels = gets.chomp.split(", ")
     print "Due Date: "
     due_date = gets.chomp
     { title: title, members: members, labels: labels, due_date: due_date }
@@ -58,7 +58,7 @@ module Prompter
     list = ""
     until options.include?(list)
       print "Select a list: "
-      list = gets.chomp.downcase
+      list = gets.chomp
     end
     list
   end

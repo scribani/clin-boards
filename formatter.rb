@@ -50,6 +50,6 @@ module Formatter
     board.lists.each do |list|
       list_arr << list.name
     end
-    puts list_arr.join(" | ")
+    list_arr.join(" | ")
   end
 end

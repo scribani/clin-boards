@@ -3,7 +3,7 @@ require_relative "card"
 class List
   attr_reader :id, :name, :cards
 
-  @id_secuence = 0
+  @id_sequence = 0
 
   def initialize(name:, cards: [], id: nil)
     @id = id || self.class.next_id
@@ -13,7 +13,7 @@ class List
   end
 
   def self.next_id
-    @id_secuence += 1
+    @id_sequence += 1
   end
 
   def self.sequence=(id)

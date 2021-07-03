@@ -72,27 +72,30 @@ class ClinBoards
   end
 
   def create_card(board_selected, _id_or_list)
-    options = print_lists_names(board_selected).downcase.split(" | ")
-    list = list_selection_form(options)
+    options = print_lists_names(board_selected)
+    puts options
+    options = options.split(" | ")
+    list_name = list_selection_form(options)
+    list = @store.find_list_by_name(board_selected, list_name)
     card_data = card_form
     @store.add_card(list, card_data)
   end
 
-  def update_card(_board_selected, id_or_list)
+  def update_card(board_selected, id_or_list)
     id = id_or_list.to_i
     card_data = card_form
-    @store.update_card(id, card_data)
+    @store.update_card(board_selected, id, card_data)
   end
 
-  def delete_card(_board_selected, id_or_list)
+  def delete_card(board_selected, id_or_list)
     id = id_or_list.to_i
-    @store.delete_card(id)
+    @store.delete_card(board_selected, id)
   end
 
   # From here we have methods that are used in card_checklist view
-  def checklist(_board_selected, id_or_list)
+  def checklist(board_selected, id_or_list)
     id = id_or_list.to_i
-    list_selected = @store.find_list_given_card_id(id)
+    list_selected = @store.find_list_given_card_id(board_selected, id)
     card_selected = @store.find_card(list_selected, id)
 
     action = ""
@@ -101,7 +104,7 @@ class ClinBoards
       action, index = checklist_menu
       action_sym = "#{action}_checklist".to_sym
 
-      return show_board if action == "back"
+      return show_board(board_selected.id) if action == "back"
 
       methods.include?(action_sym) ? method(action_sym).call(card_selected, index) : puts("Invalid option")
     end
