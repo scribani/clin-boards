@@ -13,8 +13,13 @@ class Store
   end
 
   def load_boards
-    JSON.parse(File.read(@filename), { symbolize_names: true }).map do |board|
-      Boards.new(board)
+    file_content = File.read(@filename)
+    if file_content.empty?
+      []
+    else
+      JSON.parse(file_content, { symbolize_names: true }).map do |board|
+        Boards.new(board)
+      end
     end
   end
 

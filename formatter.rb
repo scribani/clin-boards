@@ -5,7 +5,7 @@ module Formatter
     table = Terminal::Table.new
     table.title = title
     table.headings = headings
-    table.rows = collection.map(&row_formatter)
+    table.rows = collection.empty? ? collection : collection.map(&row_formatter)
     puts table
   end
 

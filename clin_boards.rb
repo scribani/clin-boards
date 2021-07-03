@@ -6,7 +6,7 @@ class ClinBoards
   include Formatter
   include Prompter
 
-  def initialize(store = "store.json")
+  def initialize(store)
     @store = Store.new(store)
     @boards = @store.boards
   end
@@ -17,13 +17,12 @@ class ClinBoards
     until action == "exit"
       print_boards
       action, id = main_menu
-      # ["create","show",]
+
       return if action == "exit"
 
       action_sym = "#{action}_board".to_sym
       methods.include?(action_sym) ? method(action_sym).call(id) : puts("Invalid option")
     end
- 
   end
 
   def create_board(_id)
@@ -49,12 +48,11 @@ class ClinBoards
       print_lists(board_selected)
       action, id_or_list = list_menu # second value could be ID or LISTNAME
 
-      return  if action == "back"
+      return if action == "back"
 
       action_sym = action.to_sym
       methods.include?(action_sym) ? method(action_sym).call(board_selected, id_or_list) : puts("Invalid option")
     end
-    
   end
 
   def create_list(board_selected, _id_or_list)
@@ -104,7 +102,7 @@ class ClinBoards
       print_card_checklist(card_selected)
       action, index = checklist_menu
 
-      return  if action == "back"
+      return if action == "back"
 
       action_sym = "#{action}_checklist".to_sym
       methods.include?(action_sym) ? method(action_sym).call(card_selected, index) : puts("Invalid option")
