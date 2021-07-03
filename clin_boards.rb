@@ -9,7 +9,7 @@ class ClinBoards
   include Verify
   include Checklists
 
-  def initialize(store = "store.json")
+  def initialize(store)
     @store = Store.new(store)
     @boards = @store.boards
   end
@@ -53,7 +53,8 @@ class ClinBoards
     until action == "back"
       print_lists(board_selected)
       action, id_or_list = list_menu # second value could be ID or LISTNAME
-      return  if action == "back"
+
+      return if action == "back"
 
       action_sym = action.to_sym
       methods.include?(action_sym) ? method(action_sym).call(board_selected, id_or_list) : puts("Invalid option")
@@ -113,7 +114,8 @@ class ClinBoards
     until action == "back"
       print_card_checklist(card_selected)
       action, index = checklist_menu
-      return  if action == "back"
+
+      return if action == "back"
 
       action_sym = "#{action}_checklist".to_sym
       methods.include?(action_sym) ? method(action_sym).call(card_selected, index) : puts("Invalid option")
